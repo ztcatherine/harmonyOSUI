@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/even/.ohos/config/default_harmonyOSUI_Aq_fC1vhgkjLxoHreyB9ifggRT759gb4r63_dYrC9RQ=.cer",
+          "storePassword": "0000001BAF5712B5BB3748D0424378FB5CA156D8EE3250BE2175C11B09F15C55769325FB501160C8371D80",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BA95B2FCEA21262E3DE057FD327B8D226F10077E6DE84DCCEB5BA5C563664572F53E2826CB8E12E",
+          "profile": "/Users/even/.ohos/config/default_harmonyOSUI_Aq_fC1vhgkjLxoHreyB9ifggRT759gb4r63_dYrC9RQ=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/even/.ohos/config/default_harmonyOSUI_Aq_fC1vhgkjLxoHreyB9ifggRT759gb4r63_dYrC9RQ=.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
