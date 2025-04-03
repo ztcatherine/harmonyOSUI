@@ -1,0 +1,13 @@
+{
+  "name": "default",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "common": "file:../../common",
+    "feature1": "file:../../features/feature1",
+    "feature2": "file:../../features/feature2"
+  }
+}

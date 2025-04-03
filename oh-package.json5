@@ -3,7 +3,10 @@
   "description": "Please describe the basic information.",
   "dependencies": {
     "@pura/harmony-utils": "^1.2.9",
-    "@pura/harmony-dialog": "^1.1.3"
+    "@pura/harmony-dialog": "^1.1.3",
+    "@jxt/xt_hud": "^3.4.0",
+    "@ohos/axios": "^2.2.5",
+    "@ohos/crypto-js": "^2.0.4"
   },
   "devDependencies": {
     "@ohos/hypium": "1.0.21",

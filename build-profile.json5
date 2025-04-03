@@ -1,11 +1,24 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "zt",
+        "material": {
+          "certpath": "C:/Users/ECCOM/.ohos/config/openharmony/zt_HarmonyUI_TOIOJJfKFu-5sXooJNFgInlVrSnwujwqy_Ti-tb2iz4=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B3B3E57FA655B20EBDFA1237316C949704F9EE73CAB8AACD7CAF3B1B9963A378BFDAF81D2774C31",
+          "profile": "C:/Users/ECCOM/.ohos/config/openharmony/zt_HarmonyUI_TOIOJJfKFu-5sXooJNFgInlVrSnwujwqy_Ti-tb2iz4=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:/Users/ECCOM/.ohos/config/openharmony/zt_HarmonyUI_TOIOJJfKFu-5sXooJNFgInlVrSnwujwqy_Ti-tb2iz4=.p12",
+          "storePassword": "0000001BAC2380D03A87EE2B530A2D0604D22170DD0DAA00B2FA8BF97DC3AE189336DE274C088F4D40D834"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "5.0.2(14)",
+        "compatibleSdkVersion": "5.0.0(12)",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "strictMode": {
@@ -26,8 +39,8 @@
   },
   "modules": [
     {
-      "name": "entry",
-      "srcPath": "./entry",
+      "name": "default",
+      "srcPath": "./product/default",
       "targets": [
         {
           "name": "default",
@@ -36,6 +49,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "common",
+      "srcPath": "./common",
+    },
+    {
+      "name": "feature1",
+      "srcPath": "./features/feature1"
+    },
+    {
+      "name": "feature2",
+      "srcPath": "./features/feature2"
     }
   ]
 }

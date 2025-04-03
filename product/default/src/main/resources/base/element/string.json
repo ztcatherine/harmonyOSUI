@@ -1,0 +1,29 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "web_get_camera_image_one_percent",
+      "value": "100%"
+    },
+    {
+      "name": "read_image_video",
+      "value": "读取用户公共目录的图片"
+
+    },
+    {
+      "name": "write_image_video",
+      "value": "修改用户公共目录的图片"
+    }
+  ]
+}
