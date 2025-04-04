@@ -3,21 +3,22 @@
     "signingConfigs": [
       {
         "name": "zt",
+        "type": "HarmonyOS",
         "material": {
-          "certpath": "C:/Users/ECCOM/.ohos/config/openharmony/zt_HarmonyUI_TOIOJJfKFu-5sXooJNFgInlVrSnwujwqy_Ti-tb2iz4=.cer",
+          "certpath": "/Users/even/.ohos/config/zt_harmonyOSUI_Aq_fC1vhgkjLxoHreyB9ifggRT759gb4r63_dYrC9RQ=.cer",
+          "storePassword": "0000001BBF061EF2355C2674F6632A76E3631BC1860886521DEA2BEE22FAA8FA51D7A9FE2E11FD8C614064",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B3B3E57FA655B20EBDFA1237316C949704F9EE73CAB8AACD7CAF3B1B9963A378BFDAF81D2774C31",
-          "profile": "C:/Users/ECCOM/.ohos/config/openharmony/zt_HarmonyUI_TOIOJJfKFu-5sXooJNFgInlVrSnwujwqy_Ti-tb2iz4=.p7b",
+          "keyPassword": "0000001B60CE00A64EFC4C682B32917F5EDC1E2468EA003BF7917CC3F051B4F8BBFD11F3423BCB9B5E4784",
+          "profile": "/Users/even/.ohos/config/zt_harmonyOSUI_Aq_fC1vhgkjLxoHreyB9ifggRT759gb4r63_dYrC9RQ=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:/Users/ECCOM/.ohos/config/openharmony/zt_HarmonyUI_TOIOJJfKFu-5sXooJNFgInlVrSnwujwqy_Ti-tb2iz4=.p12",
-          "storePassword": "0000001BAC2380D03A87EE2B530A2D0604D22170DD0DAA00B2FA8BF97DC3AE189336DE274C088F4D40D834"
+          "storeFile": "/Users/even/.ohos/config/zt_harmonyOSUI_Aq_fC1vhgkjLxoHreyB9ifggRT759gb4r63_dYrC9RQ=.p12"
         }
       }
     ],
     "products": [
       {
         "name": "default",
-        "signingConfig": "default",
+        "signingConfig": "zt",
         "compatibleSdkVersion": "5.0.0(12)",
         "runtimeOS": "HarmonyOS",
         "buildOption": {

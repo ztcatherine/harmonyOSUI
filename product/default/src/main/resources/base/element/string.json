@@ -1,6 +1,41 @@
 {
   "string": [
     {
+      "name": "permission_APP_TRACKING_CONSENT",
+      "value": "module description"
+    },    {
+      "name": "permission_ACTIVITY_MOTION",
+      "value": "module description"
+    },    {
+      "name": "permission_LOCATION",
+      "value": "module description"
+    },    {
+      "name": "permission_CAMERA",
+      "value": "module description"
+    },    {
+      "name": "permission_READ_AUDIO",
+      "value": "module description"
+    },    {
+      "name": "permission_WRITE_AUDIO",
+      "value": "module description"
+    },    {
+      "name": "permission_READ_IMAGEVIDEO",
+      "value": "module description"
+    },    {
+      "name": "permission_WRITE_IMAGEVIDEO",
+      "value": "module description"
+    },    {
+      "name": "permission_READ_PASTEBOARD",
+      "value": "module description"
+    },    {
+      "name": "camera_permission_reason",
+      "value": "module description"
+    },
+    {
+      "name": "READ_IMAGEVIDEO",
+      "value": "module description"
+    },
+    {
       "name": "module_desc",
       "value": "module description"
     },

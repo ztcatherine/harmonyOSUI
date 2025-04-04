@@ -3,7 +3,7 @@ import picker from '@ohos.file.picker';
 import image from '@ohos.multimedia.image';
 // import { fileIo as fs } from '@kit.CoreFileKit';
 import { buffer } from '@kit.ArkTS';
-import { PermissionUtil, ToastUtil, WantUtil } from '@pura/harmony-utils';
+import { PermissionUtil, ToastUtil, ResUtil } from '@pura/harmony-utils';
 import { photoAccessHelper } from '@kit.MediaLibraryKit';
 import { fileIo } from '@kit.CoreFileKit';
 import fs from '@ohos.file.fs';
@@ -35,32 +35,15 @@ class MediaDataHandler implements photoAccessHelper.MediaAssetDataHandler<ArrayB
 @Component
 export struct CameraView {
   controller: web_webview.WebviewController = new web_webview.WebviewController();
+  @State imgSrc:string = ''
 
-    // async imageToBase64(filePath:string, bufferLen = 409600) {
-    //   try {
-    //     // 1. 去掉 "file://" 前缀（如果是 content:// URI，需要额外处理）
-    //     // 2. 打开文件并读取内容
-    //     const file = fileIo.openSync(filePath, fileIo.OpenMode.READ_ONLY);
-    //     const stat = fileIo.statSync(filePath);
-    //     const buffer = new ArrayBuffer(stat.size);
-    //     fileIo.readSync(file.fd, buffer);
-    //     fileIo.closeSync(file);
-    //     // 3. 转换为 Base64 Buffer.from(uint8Array).toString('base64');
-    //     const uint8Array = new Uint8Array(buffer);
-    //     const base64 = new util.Base64Helper
-    //     return `data:image/jpeg;base64,${base64}`;
-    //   } catch (err) {
-    //     console.error('12---Failed to read file:', JSON.stringify(err));
-    //     // throw err ;
-    //   }
-    // }
   async  example(uri: string) {
-  let predicates: dataSharePredicates.DataSharePredicates = new dataSharePredicates.DataSharePredicates();
-  predicates.equalTo(photoAccessHelper.PhotoKeys.URI, uri.toString());
-  let fetchOptions: photoAccessHelper.FetchOptions = {
-    fetchColumns: [photoAccessHelper.PhotoKeys.TITLE],
-    predicates: predicates
-  };
+    let predicates: dataSharePredicates.DataSharePredicates = new dataSharePredicates.DataSharePredicates();
+    predicates.equalTo(photoAccessHelper.PhotoKeys.URI, uri.toString());
+    let fetchOptions: photoAccessHelper.FetchOptions = {
+      fetchColumns: [photoAccessHelper.PhotoKeys.TITLE],
+      predicates: predicates
+    };
 
   try {
     let fetchResult: photoAccessHelper.FetchResult<photoAccessHelper.PhotoAsset> = await phAccessHelper.getAssets(fetchOptions);
@@ -80,30 +63,64 @@ export struct CameraView {
   }
 }
 
-  async imageUriToBase64(uri: string): Promise<string | undefined> {
+  async imageUriToBase(uri: string): Promise<string | undefined> {
     try {
       // 打开文件
       let file = await fs.open(uri, fs.OpenMode.READ_ONLY);
-
-      // 获取文件信息
-      // const fileStat = await fs.stat(uri);
-
+      console.log('----file',file.fd)
+      // 2. 获取文件实际大小
+      const fileStat = await fs.stat(file.fd);
+      const fileSize = fileStat.size; // 62709
       // 读取文件内容到ArrayBuffer
-      const arrayBuffer = new ArrayBuffer(4096);
+      const arrayBuffer = new ArrayBuffer(1162710);
+      // const arrayBuffer = new ArrayBuffer(fileSize);
       await fs.read(file.fd, arrayBuffer);
 
       // 转换为Base64
       const uint8Array = new Uint8Array(arrayBuffer);
-      await fs.close(file.fd);
-      let baseSrc =  buffer.from(uint8Array).toString('base64');
-      return `data:image/png;base64,${baseSrc}`;
+      const base64Str = await new util.Base64Helper().encodeToString(uint8Array);
+      this.imgSrc = `data:image/png;base64,${base64Str}`
+      console.log('---baseImg:', `data:image/png;base64,${base64Str}`);
+      return this.imgSrc;
     }catch (err) {
-      console.error('---文件读取或转换失败:', err);
+      console.error('---文件读取或转换失败:', JSON.stringify(err));
       return undefined
       // 可根据具体错误类型，向用户展示友好提示，比如弹出提示框等
     }
+  }
 
-}
+  // async imageUriToBase64(uri: string): Promise<string | undefined> {
+  //   let file: fs.File | undefined = undefined; // 显式声明类型
+  //   try {
+  //     // 1. 打开文件
+  //     file = await fs.open(uri, fs.OpenMode.READ_ONLY);
+  //
+  //     // 2. 获取文件大小
+  //     const fileStat = await fs.stat(uri);
+  //     const fileSize = fileStat.size;
+  //
+  //     // 3. 读取整个文件内容到 ArrayBuffer
+  //     const arrayBuffer = new ArrayBuffer(fileSize);
+  //     const readLen = await fs.read(file.fd, arrayBuffer);
+  //
+  //     // 4. 转换为 Base64（使用鸿蒙官方 Base64 库）
+  //     const uint8Array = new Uint8Array(arrayBuffer, 0, readLen); // 根据实际读取长度截取
+  //     const base64Encoder = new util.Base64Helper();
+  //     const base64Str = base64Encoder.encodeToString(uint8Array);
+  //     this.imgSrc = `data:image/png;base64,${base64Str}`
+  //     // 5. 添加 MIME 类型前缀（根据实际图片类型调整）
+  //     return `data:image/png;base64,${base64Str}`;
+  //   } catch (err) {
+  //     console.error('---文件读取或转换失败:', JSON.stringify(err));
+  //     return undefined;
+  //   } finally {
+  //     // 确保文件被关闭
+  //     if (file?.fd !== undefined) {
+  //       await fs.close(file.fd);
+  //     }
+  //   }
+  // }
+
   async selectFile(result: FileSelectorResult): Promise<void> {
     let photoSelectOptions = new photoAccessHelper.PhotoSelectOptions();
     // 过滤选择媒体文件类型为IMAGE
@@ -115,8 +132,7 @@ export struct CameraView {
     let chooseFile = photoSelectResult.photoUris[0];
     // console.log('---this', this.imageToBase64);
     // await this.imageUriToBase64(chooseFile)
-     let baseImg = await this.imageUriToBase64(chooseFile)
-     console.log('---baseImg:'+baseImg);
+     let baseImg = await this.imageUriToBase(chooseFile)
     // console.log('---photoSelectResult.photoUris:'+photoSelectResult.photoUris);
     // photoSelectResult.photoUris[0] = baseImg
     // result.handleFileList(photoSelectResult.photoUris);
@@ -127,20 +143,28 @@ export struct CameraView {
 
   build() {
     Column() {
+      Image(this.imgSrc)
+        .width(60)
+        .height(60)
       Button("最佳使用案例")
         .onClick(() => {
-          let ps: Permissions[] = ['ohos.permission.READ_IMAGEVIDEO', 'ohos.permission.WRITE_IMAGEVIDEO'];
-          PermissionUtil.requestPermissions(ps).then((result) => {
-            if (result) {
-              ToastUtil.showToast(`最佳使用案例授权，已通过...`);
-            } else {
-              PermissionUtil.requestPermissionOnSetting(ps).then((grant) => {
-                ToastUtil.showToast(`最佳使用案例，结果：${grant}`);
-              }).catch(() => {
-                ToastUtil.showToast(`111`);
-              })
-            }
-          })
+          try {
+            let ps: Permissions[] = ['ohos.permission.READ_IMAGEVIDEO'];
+            PermissionUtil.requestPermissions(ps).then((result) => {
+              if (result) {
+                ToastUtil.showToast(`最佳使用案例授权，已通过...`);
+              } else {
+                PermissionUtil.requestPermissionOnSetting(ps).then((grant) => {
+                  ToastUtil.showToast(`最佳使用案例，结果：${grant}`);
+                }).catch(() => {
+                  ToastUtil.showToast(`111`);
+                })
+              }
+            })
+          } catch (err) {
+            console.error('---err',err)
+          }
+
         })
       Web({
         src: $rawfile('camera.html'),
